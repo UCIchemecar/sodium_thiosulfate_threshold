@@ -111,7 +111,7 @@ void setup(void)
   
   /* Configure the sensor */
   configureSensor();
-    
+  Serial.print("Time    ");   Serial.print("Current Lux "); Serial.print("Time that liquid stabilized  "); Serial.print("Time that liquid went dark  "); Serial.println("duration to go from normal to dark")
   // Now we're ready to get readings ... move on to loop()!
 }
 
@@ -146,18 +146,14 @@ void advancedRead(void)
   // That way you can do whatever math and comparisons you want!
   uint32_t lum = tsl.getFullLuminosity();
   uint16_t ir, full;
-  unsigned long t0=0; //the time that liquid was injected
-  unsigned long t1=0; //the time that the liquid went dark
-  int f1=0; // flag to indicate phase, phase 0 is the default where nothing has happened. 
+  static unsigned long t0=0; //the time that liquid was stabilized
+  static unsigned long t1=0; //the time that the liquid went dark
+  static unsigned long time1=0; //time it takes for the liquid to go from injected to dark
+  static int f1=0; // flag to indicate phase, phase 0 is the default where nothing has happened. 
   ir = lum >> 16;
   full = lum & 0xFFFF;
-  //Serial.print("[ "); Serial.print(millis()); Serial.print(" ms ] ");
-  //Serial.print("IR: "); Serial.print(ir);  Serial.print("  ");
-  //Serial.print("Full: "); Serial.print(full); Serial.print("  ");
-  //Serial.print("Visible: "); Serial.print(full - ir); Serial.print("  ");
-  //Serial.print("Lux: "); 
   unsigned int a=tsl.calculateLux(full, ir);
-  Serial.print(millis()); Serial.print("    "); Serial.print(a); Serial.print("    "); Serial.println(t1);
+  Serial.print(millis()); Serial.print("    "); Serial.print(a); Serial.print("    "); Serial.print(t0);  Serial.print("    "); Serial.print(t1); Serial.print("    "); Serial.println(time1);
   if(a<40000 && millis()>=200 && f1==0)
   {
     f1=1;//liquid has been injected. 
@@ -170,7 +166,8 @@ void advancedRead(void)
   if(f1==2 && a<40000)
   {
     f1=3;//liquid has turned dark
-    t1=millis();  
+    t1=millis();
+    time1=t1-t0;  
   }
 }
 
