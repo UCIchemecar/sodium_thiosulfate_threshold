@@ -146,6 +146,9 @@ void advancedRead(void)
   // That way you can do whatever math and comparisons you want!
   uint32_t lum = tsl.getFullLuminosity();
   uint16_t ir, full;
+  unsigned long t0=0; //the time that liquid was injected
+  unsigned long t1=0; //the time that the liquid went dark
+  int f1=0; // flag to indicate phase, phase 0 is the default where nothing has happened. 
   ir = lum >> 16;
   full = lum & 0xFFFF;
   //Serial.print("[ "); Serial.print(millis()); Serial.print(" ms ] ");
@@ -153,7 +156,22 @@ void advancedRead(void)
   //Serial.print("Full: "); Serial.print(full); Serial.print("  ");
   //Serial.print("Visible: "); Serial.print(full - ir); Serial.print("  ");
   //Serial.print("Lux: "); 
-  Serial.print(millis()); Serial.print("    "); Serial.println(tsl.calculateLux(full, ir));
+  unsigned int a=tsl.calculateLux(full, ir);
+  Serial.print(millis()); Serial.print("    "); Serial.print(tsl.calculateLux(full, ir)); Serial.print("    "); Serial.println(t1);
+  if(a<40000 && millis()>=200 && f1==0)
+  {
+    f1=1;//liquid has been injected. 
+  }
+  if(f1==1 && a>40000)
+  {
+    f1=2;//liquid has been stabilized 
+    t0=millis();
+  }
+  if(f1==2 && a<40000)
+  {
+    f1=3;//liquid has turned dark
+    t1=millis();  
+  }
 }
 
 /**************************************************************************/
