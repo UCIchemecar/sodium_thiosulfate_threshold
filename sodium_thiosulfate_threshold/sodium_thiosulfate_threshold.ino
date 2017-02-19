@@ -157,7 +157,7 @@ void advancedRead(void)
   //Serial.print("Visible: "); Serial.print(full - ir); Serial.print("  ");
   //Serial.print("Lux: "); 
   unsigned int a=tsl.calculateLux(full, ir);
-  Serial.print(millis()); Serial.print("    "); Serial.print(tsl.calculateLux(full, ir)); Serial.print("    "); Serial.println(t1);
+  Serial.print(millis()); Serial.print("    "); Serial.print(a); Serial.print("    "); Serial.println(t1);
   if(a<40000 && millis()>=200 && f1==0)
   {
     f1=1;//liquid has been injected. 
