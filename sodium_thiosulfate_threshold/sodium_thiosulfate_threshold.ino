@@ -58,29 +58,29 @@ void configureSensor(void)
   //tsl.setTiming(TSL2591_INTEGRATIONTIME_600MS);  // longest integration time (dim light)
 
   /* Display the gain and integration time for reference sake */  
-  Serial.println("------------------------------------");
-  Serial.print  ("Gain:         ");
+  //Serial.println("------------------------------------");
+  //Serial.print  ("Gain:         ");
   tsl2591Gain_t gain = tsl.getGain();
   switch(gain)
   {
     case TSL2591_GAIN_LOW:
-      Serial.println("1x (Low)");
+      //Serial.println("1x (Low)");
       break;
     case TSL2591_GAIN_MED:
-      Serial.println("25x (Medium)");
+      //Serial.println("25x (Medium)");
       break;
     case TSL2591_GAIN_HIGH:
-      Serial.println("428x (High)");
+      //Serial.println("428x (High)");
       break;
     case TSL2591_GAIN_MAX:
-      Serial.println("9876x (Max)");
+      //Serial.println("9876x (Max)");
       break;
   }
-  Serial.print  ("Timing:       ");
-  Serial.print((tsl.getTiming() + 1) * 100, DEC); 
-  Serial.println(" ms");
-  Serial.println("------------------------------------");
-  Serial.println("");
+  //Serial.print  ("Timing:       ");
+  //Serial.print((tsl.getTiming() + 1) * 100, DEC); 
+  //Serial.println(" ms");
+  //Serial.println("------------------------------------");
+  //Serial.println("");
 
   
 }
@@ -111,7 +111,7 @@ void setup(void)
   
   /* Configure the sensor */
   configureSensor();
-  Serial.print("Time    ");   Serial.print("Current Lux "); Serial.print("Time that liquid stabilized  "); Serial.print("Time that liquid went dark  "); Serial.println("duration to go from normal to dark")
+  Serial.print("Time    ");   Serial.print("Current Lux     "); Serial.print("    Time that liquid stabilized  "); Serial.print("     Time that liquid went dark  "); Serial.println("      duration to go from normal to dark");
   // Now we're ready to get readings ... move on to loop()!
 }
 
@@ -153,7 +153,7 @@ void advancedRead(void)
   ir = lum >> 16;
   full = lum & 0xFFFF;
   unsigned int a=tsl.calculateLux(full, ir);
-  Serial.print(millis()); Serial.print("    "); Serial.print(a); Serial.print("    "); Serial.print(t0);  Serial.print("    "); Serial.print(t1); Serial.print("    "); Serial.println(time1);
+  Serial.print(millis()); Serial.print("          "); Serial.print(a); Serial.print("             "); Serial.print(t0);  Serial.print("                                 "); Serial.print(t1); Serial.print("                              "); Serial.println(time1);
   if(a<40000 && millis()>=200 && f1==0)
   {
     f1=1;//liquid has been injected. 
