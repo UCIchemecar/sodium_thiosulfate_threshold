@@ -94,20 +94,20 @@ void setup(void)
 {
   Serial.begin(9600);
   
-  Serial.println("Starting Adafruit TSL2591 Test!");
+  //Serial.println("Starting Adafruit TSL2591 Test!");
   
   if (tsl.begin()) 
   {
-    Serial.println("Found a TSL2591 sensor");
+    //Serial.println("Found a TSL2591 sensor");
   } 
   else 
   {
-    Serial.println("No sensor found ... check your wiring?");
+    //Serial.println("No sensor found ... check your wiring?");
     while (1);
   }
     
   /* Display some basic information on this sensor */
-  displaySensorDetails();
+  //displaySensorDetails();
   
   /* Configure the sensor */
   configureSensor();
