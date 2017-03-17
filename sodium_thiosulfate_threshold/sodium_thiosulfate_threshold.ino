@@ -165,9 +165,13 @@ void advancedRead(void)
   }
   if(f1==2 && a<40000)
   {
-    f1=3;//liquid has turned dark
+    //liquid has turned dark
     t1=millis();
     time1=t1-t0;  
+    if (t1>10000)
+    {
+      f1=3;
+    }
   }
 } 
 
